@@ -1,0 +1,26 @@
+
+CREATE TABLE postac (id_postaci INT PRIMARY KEY auto_increment, nazwa VARCHAR(40), rodzaj ENUM('wiking','ptak','kobieta') NOT NULL, data_ur DATE, wiek TINYINT);
+INSERT INTO postac VALUES(NULL, 'Bjorn', 'wiking', '1000-01-01', 20);
+INSERT INTO postac VALUES(NULL, 'Drozd', 'ptak', '1010-01-01', 10);
+INSERT INTO postac VALUES(NULL, 'Tesciowa', 'kobieta', '1000-01-01', 20);
+UPDATE postac SET wiek=88 WHERE id_postaci = 3;
+UPDATE postac SET data_ur='912-01-01' WHERE id_postaci = 3;
+CREATE TABLE walizka(id_walizki INT PRIMARY KEY auto_increment, pojemnosc TINYINT, kolor ENUM('rozowy','czerwony','teczowy','zolty'), id_wlascicela INT, FOREIGN KEY (id_wlascicela) REFERENCES postac(id_postaci) ON DELETE CASCADE);
+ALTER TABLE walizka MODIFY kolor ENUM ('rozowy','czerwony','teczowy','solty') DEFAULT 'rozowy';
+INSERT INTO walizka VALUES(NULL,34,DEFAULT,1);n
+INSERT INTO walizka VALUES(NULL,34,DEFAULT,3);
+CREATE TABLE izba (adres_budynku VARCHAR(40), nazwa_izby VARCHAR(40), metraz TINYINT, wlascicel INT, FOREIGN KEY (wlascicel) REFERENCES postac(id_postaci) ON DELETE SET NULL, CONSTRAINT pk_izba PRIMARY KEY (adres_budynku,nazwa_izby));
+ALTER TABLE izba ADD kolor_izby VARCHAR(40) AFTER metraz;
+ALTER TABLE izba MODIFY kolor_izby VARCHAR(40) DEFAULT 'czarny';
+INSERT INTO izba(adres_budynku,nazwa_izby) VALUES ('gdzierakizimuja','spizarnia');
+ |
+ |   źle
+\ /
+CREATE TABLE przetwory (id_przetworu INT PRIMARY KEY, rok_produkcji YEAR[4] DEFAULT 1654, id_wykonawcy INT, FOREIGN KEY (id_wykonawcy) REFERENCES postac(id_postaci), zawartosc VARCHAR(40), dodatek VARCHAR(40) DEFAULT 'papryczka chilli', id_konsumenta INT, FOREIGN KEY (id_konsumenta) REFERENCES postac(id_postaci));
+
+
+
+
+
+
+
