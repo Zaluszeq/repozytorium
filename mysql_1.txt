@@ -16,6 +16,17 @@ INSERT INTO izba(adres_budynku,nazwa_izby) VALUES ('gdzierakizimuja','spizarnia'
 CREATE TABLE przetwory (id_przetworu INT PRIMARY KEY, rok_produkcji YEAR(4) DEFAULT (1654), id_wykonawcy INT, FOREIGN KEY(id_wykonawcy) REFERENCES postac(id_postaci), zawartosc VARCHAR(40), dodatek VARCHAR(40) DEFAULT ('papryczka chili'), id_konsumenta INT, FOREIGN KEY (id_konsumenta) REFERENCES postac(id_postaci));
 INSERT INTO przetwory(zawartosc) VALUES('bigos z papryczka chili');
 INSERT INTO postac(nazwa, rodzaj, data_ur, wiek) VALUES ('Kili', 'wiking', '1000-01-01', 20);
+CREATE TABLE statek(nazwa_statku VARCHAR(60) PRIMARY KEY, rodzaj_statku ENUM('nieznany'), data_wodowania DATE, max_ladownosc INT UNSIGNED);
+INSERT INTO statek(nazwa_statku,rodzaj_statku,data_wodowania,max_ladownosc)values('Odin','nieznany','1000-07-06',500);
+ALTER TABLE postac ADD COLUMN funkcja VARCHAR(60);
+UPDATE postac SET funkcja = 'kapitan' WHERE id_postaci=1;
+ALTER TABLE postac ADD COLUMN nazwa_statku VARCHAR(60);
+ALTER TABLE postac ADD CONSTRAINT fk_statek FOREIGN KEY(nazwa_statku) REFERENCES statek(nazwa_statku);
+UPDATE postac SET nazwa_statku = 'Odin' WHERE id_postaci IN(1,2,4,5,6,7,8);
+DELETE FROM izba WHERE nazwa_izby = 'spizarnia';
+DROP TABLE izba;
+
+
 
 
 
